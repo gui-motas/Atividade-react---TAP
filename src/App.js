@@ -1,7 +1,11 @@
-import React from 'react';
+import React from "react";
+import { LearningProvider } from "./context/LearningContext.jsx";
+import Dashboard from "./components/Dashboard.jsx";
 
 export default function App() {
-  return React.createElement('main', null,
-    React.createElement('h1', null, 'Seu próximo passo começa aqui.'),
+  return React.createElement(
+    LearningProvider,
+    null,
+    React.createElement(Dashboard),
   );
 }
