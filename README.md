@@ -29,13 +29,5 @@ Abra o endereço informado pelo Vite. Para gerar os arquivos de produção, exec
 ## Verificação
 
 ```sh
-npx playwright install chromium
-npm test
 npm run build
 ```
-
-Os testes executam as interações dos seis componentes em 375 × 812 (celular), 768 × 1024 (tablet) e 1440 × 1000 (desktop), incluindo teclado, nomes acessíveis, troca do curso em destaque, conclusão da trilha, notificações e ausência de rolagem horizontal. Os breakpoints principais do CSS são 640 e 1100 px. O layout também respeita a preferência por redução de movimento. As capturas de tela de cada resolução são geradas em `test-results/`.
-
-## Limites
-
-É uma demonstração local, sem cadastro, servidor ou persistência. Recarregar a página reinicia o progresso. Não há vídeos reais nem emissão de certificados. Somente React e React DOM entram na aplicação; Vite e Playwright são ferramentas de desenvolvimento. Fontes do sistema, ícones SVG locais e ilustrações em CSS dispensam serviços externos em tempo de execução.
