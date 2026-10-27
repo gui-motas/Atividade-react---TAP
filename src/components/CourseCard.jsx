@@ -49,7 +49,7 @@ export default function CourseCard({ course }) {
         />
         <button
           className="course-continue"
-          aria-label={`Estudar ${course.title}`}
+          aria-label={`${completed === course.lessons ? "Revisar curso" : "Continuar curso"}: ${course.title}`}
           onClick={() => {
             setActiveCourseId(course.id);
             document.getElementById("continuar").focus();

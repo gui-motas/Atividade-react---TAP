@@ -1,6 +1,8 @@
 import { test, expect } from "@playwright/test";
 
-test("seis componentes funcionam juntos e o layout cabe na tela", async ({ page }, testInfo) => {
+test("seis componentes funcionam juntos e o layout cabe na tela", async ({
+  page,
+}, testInfo) => {
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
@@ -8,8 +10,18 @@ test("seis componentes funcionam juntos e o layout cabe na tela", async ({ page 
     page.getByRole("heading", { name: "Seu próximo passo começa aqui." }),
   ).toBeVisible();
   await expect(page.getByRole("article")).toHaveCount(3);
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
-  await page.screenshot({ path: testInfo.outputPath("painel.png"), fullPage: true });
+  await expect(
+    page.getByRole("button", { name: "Filtrar por categoria" }),
+  ).toHaveAccessibleName("Filtrar por categoria: Todas as categorias");
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBe(true);
+  await page.screenshot({
+    path: testInfo.outputPath("painel.png"),
+    fullPage: true,
+  });
 
   await expect(
     page.getByRole("button", { name: "Página anterior", exact: true }),
@@ -103,6 +115,17 @@ test("menu e abas aceitam teclado, clique fora fecha o menu", async ({
   );
   await page.keyboard.press("Home");
   await expect(page.getByRole("tab", { name: "Em andamento" })).toBeFocused();
+  await page
+    .getByRole("button", {
+      name: "Continuar curso: Design de interfaces",
+      exact: true,
+    })
+    .click();
+  await expect(
+    page.getByRole("progressbar", {
+      name: "Progresso em Design de interfaces",
+    }),
+  ).toHaveAttribute("aria-valuenow", "30");
 });
 
 test("concluir todas as aulas atualiza os componentes pelo contexto", async ({
@@ -122,7 +145,9 @@ test("concluir todas as aulas atualiza os componentes pelo contexto", async ({
   ).toBeDisabled();
   await page.getByRole("tab", { name: "Concluídos" }).click();
   await expect(
-    page.getByRole("article").getByRole("heading", { name: "Fundamentos de React", exact: true }),
+    page
+      .getByRole("article")
+      .getByRole("heading", { name: "Fundamentos de React", exact: true }),
   ).toBeVisible();
   await expect(page.getByRole("article")).toHaveCount(1);
 });

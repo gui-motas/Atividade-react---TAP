@@ -7,6 +7,7 @@ export default function Dropdown({ options, value, onChange, label }) {
   const trigger = useRef(null);
   const optionRefs = useRef([]);
   const id = useId();
+  const selectedLabel = options.find((option) => option.value === value)?.label;
 
   useEffect(() => {
     if (!open) return;
@@ -53,13 +54,13 @@ export default function Dropdown({ options, value, onChange, label }) {
       <button
         className="filter-button"
         ref={trigger}
-        aria-label={label}
+        aria-label={`${label}: ${selectedLabel}`}
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls={open ? id : undefined}
         onClick={() => setOpen(!open)}
       >
-        {options.find((option) => option.value === value)?.label}
+        {selectedLabel}
         <Icon name="chevron" size={16} />
       </button>
       {open && (
